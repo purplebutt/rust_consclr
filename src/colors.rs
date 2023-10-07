@@ -13,6 +13,7 @@ pub trait Formatter: Display {
 impl Formatter for Regular {}
 impl Formatter for Bold {}
 impl Formatter for Background {}
+impl Formatter for Underline {}
 impl Formatter for Special {}
 
 /// this enum provide regular color format for terminal
@@ -70,6 +71,36 @@ impl Display for Bold {
             Self::GRBLUE => s = "\x1B[1;36m",
             Self::GRAY => s = "\x1B[1;37m",
             Self::WHITE => s = "\x1B[1;38m"
+        }
+        write!(f, "{s}")
+    }
+}
+
+/// this enum provide color+underline format for terminal
+pub enum Underline {
+    BLACK,
+    RED,
+    GREEN,
+    YELLOW,
+    BLUE,
+    PURPLE,
+    GRBLUE,
+    GRAY,
+    WHITE
+}
+impl Display for Underline {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        let s;
+        match self {
+            Self::BLACK => s = "\x1B[4;30m",
+            Self::RED => s = "\x1B[4;31m",
+            Self::GREEN => s = "\x1B[4;32m",
+            Self::YELLOW => s = "\x1B[4;33m",
+            Self::BLUE => s = "\x1B[4;34m",
+            Self::PURPLE => s = "\x1B[4;35m",
+            Self::GRBLUE => s = "\x1B[4;36m",
+            Self::GRAY => s = "\x1B[4;37m",
+            Self::WHITE => s = "\x1B[4;38m"
         }
         write!(f, "{s}")
     }

@@ -1,3 +1,93 @@
+//!
+//! A library to colorized your terminal
+//! This library provides traits that give extension function
+//! for &str, &String and String and also macro.
+//!
+//! # 1. Traits
+//! There are two types of traits that available, the fixed 256 traits
+//! and traits with generic type to work with dynamic buffer size.
+//!
+//! # 256 examples
+//! ```
+//! 
+//! fn create_text() -> (&'static str, String, &'static str, &'static str) {
+//!     let m1: &str = "Success!";
+//!     let m2: String = "Information!".to_string();
+//!     let m3: &str = "Failed!";
+//!     let m4 = "Error!";
+//!     (m1, m2, m3, m4)
+//! }
+//! 
+//! fn regular(args: (&str, String, &str, &str)) {
+//!     use consclr::Color256;
+//! 
+//!     println!("{}", args.0.green());
+//!     println!("{}", args.1.blue());
+//!     println!("{}", args.2.purple());
+//!     println!("{}", args.3.red());
+//! }
+//!
+//! fn underline(args: (&str, String, &str, &str)) {
+//!     use consclr::ColorUl256;
+//! 
+//!     println!("{}", args.0.ugreen());
+//!     println!("{}", args.1.ublue());
+//!     println!("{}", args.2.upurple());
+//!     println!("{}", args.3.ured());
+//! }
+//! 
+//! fn background(args: (&str, String, &str, &str)) {
+//!     use consclr::ColorBg256;
+//! 
+//!     println!("{}", args.0.bggreen());
+//!     println!("{}", args.1.bgblue());
+//!     println!("{}", args.2.bgpurple());
+//!     println!("{}", args.3.bgred());
+//! }
+//! 
+//! fn bold(args: (&str, String, &str, &str)) {
+//!     use consclr::ColorBold256;
+//! 
+//!     println!("{}", args.0.greenb());
+//!     println!("{}", args.1.blueb());
+//!     println!("{}", args.2.purpleb());
+//!     println!("{}", args.3.redb());
+//! }
+//! 
+//! fn main() {
+//!     regular(create_text());
+//!     underline(create_text());
+//!     background(create_text());
+//!     bold(create_text());
+//! }
+//! ```
+//!
+//! # dynamic generic type
+//! 
+//! ```
+//! fn create_text() -> (&'static str, String, &'static str, &'static str) {
+//!     let m1: &str = "Success!";
+//!     let m2: String = "Information!".to_string();
+//!     let m3: &str = "Failed!";
+//!     let m4 = "Error!";
+//!     (m1, m2, m3, m4)
+//! }
+//! 
+//! fn regular(args: (&str, String, &str, &str)) {
+//!     use consclr::Color; 
+//! 
+//!     // use buffer with size 32 bytes
+//!     println!("{}", args.0.dgreen::<32>());
+//!     println!("{}", args.1.dblue::<32>());
+//!     println!("{}", args.2.dpurple::<32>());
+//!     println!("{}", args.3.dred::<32>());
+//! }
+//! 
+//! fn main() {
+//!     regular(create_text());
+//! }
+//! ```
+
 pub mod colors; pub mod helper; pub mod macros; pub mod prelude;
 
 use cbfr::prelude::BFRDYN;
@@ -5,6 +95,7 @@ use crate::colors::{
     Formatter, 
     Regular, 
     Background, 
+    Underline,
     Special, 
     Bold
 };
@@ -144,24 +235,67 @@ pub trait ColorBg256: ToString {
     }
 }
 
-/// trait ColorBg256, Color256 and ColorBold256 are
+///
+/// A trait that contain methods to format self with background color
+/// once this trait imported, &str, &String and String will
+/// have extension method to format it with bg color on terminal
+/// # Example
+/// ```
+/// use consclr::ColorUl256;
+/// 
+/// let text = "Lorem Ipsum";
+/// println!("{}", text.ured());
+/// ```
+pub trait ColorUl256: ToString {
+    fn ublack(&self) -> BFRDYN {
+        stylify(self.to_string().as_str(), Underline::BLACK)
+    }
+    fn ured(&self) -> BFRDYN {
+        stylify(self.to_string().as_str(), Underline::RED)
+    }
+    fn ugreen(&self) -> BFRDYN {
+        stylify(self.to_string().as_str(), Underline::GREEN)
+    }
+    fn uyellow(&self) -> BFRDYN {
+        stylify(self.to_string().as_str(), Underline::YELLOW)
+    }
+    fn ublue(&self) -> BFRDYN {
+        stylify(self.to_string().as_str(), Underline::BLUE)
+    }
+    fn upurple(&self) -> BFRDYN {
+        stylify(self.to_string().as_str(), Underline::PURPLE)
+    }
+    fn ugrblue(&self) -> BFRDYN {
+        stylify(self.to_string().as_str(), Underline::GRBLUE)
+    }
+    fn ugray(&self) -> BFRDYN {
+        stylify(self.to_string().as_str(), Underline::GRAY)
+    }
+    fn uwhite(&self) -> BFRDYN {
+        stylify(self.to_string().as_str(), Underline::WHITE)
+    }
+}
+
+/// trait ColorBg256, Color256, ColorUl256 and ColorBold256 are
 /// implemented for &str, &String and String
 impl Color256 for &str {}
 impl ColorBold256 for &str {}
 impl ColorBg256 for &str {}
+impl ColorUl256 for &str {}
 
-/// trait ColorBg256, Color256 and ColorBold256 are
+/// trait ColorBg256, Color256, ColorUl256 and ColorBold256 are
 /// implemented for &str, &String and String
 impl Color256 for &String {}
 impl ColorBold256 for &String {}
 impl ColorBg256 for &String {}
+impl ColorUl256 for &String {}
 
-/// trait ColorBg256, Color256 and ColorBold256 are
+/// trait ColorBg256, Color256, ColorUl256 and ColorBold256 are
 /// implemented for &str, &String and String
 impl Color256 for String {}
 impl ColorBold256 for String {}
 impl ColorBg256 for String {}
-
+impl ColorUl256 for String {}
 
 // #### INFO: Dynamics
 

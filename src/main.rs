@@ -1,7 +1,6 @@
 use consclr::{prelude::*, ColorBg, Color, ColorBold};
 use consclr::{clr, cprint, pchar};
 
-
 fn main() {
     let a = "black"; let b = "red"; let c = "green";
     let d = "yellow"; let e = "blue"; let f = "purple";

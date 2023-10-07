@@ -1,8 +1,12 @@
 # consclr
 a rust library to make your console text colorful
 
+# What's new
+    -- v0.2.1 New traits ColorUl256 to colorized and add underline style to your text on terminal
+    -- traits ColorUl for dynamic buffer with generic type still not available for current version but will be added in the future
+
 # Quick start
-```
+```rust
 use consclr::{prelude::*, ColorBg, Color, ColorBold};
 use consclr::{clr, cprint, pchar};
 
