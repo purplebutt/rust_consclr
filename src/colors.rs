@@ -17,17 +17,7 @@ impl Formatter for Underline {}
 impl Formatter for Special {}
 
 /// this enum provide regular color format for terminal
-pub enum Regular {
-    BLACK,
-    RED,
-    GREEN,
-    YELLOW,
-    BLUE,
-    PURPLE,
-    GRBLUE,
-    GRAY,
-    WHITE
-}
+pub enum Regular { BLACK, RED, GREEN, YELLOW, BLUE, PURPLE, GRBLUE, GRAY, WHITE }
 impl Display for Regular {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let s;
@@ -45,19 +35,24 @@ impl Display for Regular {
         write!(f, "{s}")
     }
 }
+impl<T: AsRef<str>> From<T> for Regular {
+    fn from(value: T) -> Self {
+        match value.as_ref().to_lowercase().as_str() {
+            "red" => Self::RED,
+            "green" => Self::GREEN,
+            "yellow" => Self::YELLOW,
+            "blue" => Self::BLUE,
+            "purple" => Self::PURPLE,
+            "grblue" => Self::GRBLUE,
+            "gray" => Self::GRAY,
+            "white" => Self::WHITE,
+            _ => Self::BLACK
+        }
+    }
+}
 
 /// this enum provide color+bold format for terminal
-pub enum Bold {
-    BLACK,
-    RED,
-    GREEN,
-    YELLOW,
-    BLUE,
-    PURPLE,
-    GRBLUE,
-    GRAY,
-    WHITE
-}
+pub enum Bold { BLACK, RED, GREEN, YELLOW, BLUE, PURPLE, GRBLUE, GRAY, WHITE }
 impl Display for Bold {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let s;
@@ -75,19 +70,24 @@ impl Display for Bold {
         write!(f, "{s}")
     }
 }
+impl<T: AsRef<str>> From<T> for Bold {
+    fn from(value: T) -> Self {
+        match value.as_ref().to_lowercase().as_str() {
+            "red" => Self::RED,
+            "green" => Self::GREEN,
+            "yellow" => Self::YELLOW,
+            "blue" => Self::BLUE,
+            "purple" => Self::PURPLE,
+            "grblue" => Self::GRBLUE,
+            "gray" => Self::GRAY,
+            "white" => Self::WHITE,
+            _ => Self::BLACK
+        }
+    }
+}
 
 /// this enum provide color+underline format for terminal
-pub enum Underline {
-    BLACK,
-    RED,
-    GREEN,
-    YELLOW,
-    BLUE,
-    PURPLE,
-    GRBLUE,
-    GRAY,
-    WHITE
-}
+pub enum Underline { BLACK, RED, GREEN, YELLOW, BLUE, PURPLE, GRBLUE, GRAY, WHITE }
 impl Display for Underline {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let s;
@@ -105,20 +105,25 @@ impl Display for Underline {
         write!(f, "{s}")
     }
 }
+impl<T: AsRef<str>> From<T> for Underline {
+    fn from(value: T) -> Self {
+        match value.as_ref().to_lowercase().as_str() {
+            "red" => Self::RED,
+            "green" => Self::GREEN,
+            "yellow" => Self::YELLOW,
+            "blue" => Self::BLUE,
+            "purple" => Self::PURPLE,
+            "grblue" => Self::GRBLUE,
+            "gray" => Self::GRAY,
+            "white" => Self::WHITE,
+            _ => Self::BLACK
+        }
+    }
+}
 
 /// this enum provide background color format for terminal
 /// also adjust font color to black when background color is bright
-pub enum Background {
-    BLACK,
-    RED,
-    GREEN,
-    YELLOW,
-    BLUE,
-    PURPLE,
-    GRBLUE,
-    GRAY,
-    WHITE
-}
+pub enum Background { BLACK, RED, GREEN, YELLOW, BLUE, PURPLE, GRBLUE, GRAY, WHITE }
 impl Display for Background {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let s;
@@ -136,16 +141,24 @@ impl Display for Background {
         write!(f, "{s}")
     }
 }
+impl<T: AsRef<str>> From<T> for Background {
+    fn from(value: T) -> Self {
+        match value.as_ref().to_lowercase().as_str() {
+            "red" => Self::RED,
+            "green" => Self::GREEN,
+            "yellow" => Self::YELLOW,
+            "blue" => Self::BLUE,
+            "purple" => Self::PURPLE,
+            "grblue" => Self::GRBLUE,
+            "gray" => Self::GRAY,
+            "white" => Self::WHITE,
+            _ => Self::BLACK
+        }
+    }
+}
 
 /// this enum provide other font format
-pub enum Special {
-    BOLD,
-    DIM,
-    ITALIC,
-    UNDERLINE,
-    BLINK,
-    DEF
-}
+pub enum Special { BOLD, DIM, ITALIC, UNDERLINE, BLINK, DEF }
 impl Display for Special {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let s;
@@ -158,6 +171,18 @@ impl Display for Special {
             Self::DEF => s = "\x1B[0m",
         }
         write!(f, "{s}")
+    }
+}
+impl<T: AsRef<str>> From<T> for Special {
+    fn from(value: T) -> Self {
+        match value.as_ref().to_lowercase().as_str() {
+            "bold" => Self::BOLD,
+            "dim" => Self::DIM,
+            "italic" => Self::ITALIC,
+            "underline" => Self::UNDERLINE,
+            "BLINK" => Self::BLINK,
+            _ => Self::DEF,
+        }
     }
 }
 

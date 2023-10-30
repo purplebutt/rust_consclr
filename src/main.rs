@@ -1,10 +1,16 @@
-use consclr::{prelude::*, ColorBg, Color, ColorBold};
-use consclr::{clr, cprint, pchar};
+use consclr::{prelude::*, ColorBg, Color, ColorBold, to_color};
+use consclr::{clr, clr2, cprint, pchar};
 
 fn main() {
     let a = "black"; let b = "red"; let c = "green";
     let d = "yellow"; let e = "blue"; let f = "purple";
     let g = "grblue"; let h = "gray"; let i = "white";
+
+    
+    clr!("This is green text", "green");
+    let color: Bold = "yellow".into();
+    clr!("clr => Yellow text with bg grayblue", &color.s(), &Background::GRBLUE.s());
+    clr2!("clr2 => Yellow text with bg grayblue", "yellow");
 
     println!("{}", a.black());
     println!("{}", b.red());

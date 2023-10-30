@@ -1,8 +1,19 @@
 # consclr
 a rust library to make your console text colorful
 
-# What's new
-    -- v0.2.1 New traits ColorUl256 to colorized and add underline style to your text on terminal
+# What's new (v0.2.2)
+    -- enums on colors module now implement from AsRef<str> trait. 
+    -- so now we can create color from str like this:
+```Rust
+fn main() {
+    use consclr::prelude::Regular;
+    let color: Regular = "yellow".into();
+}
+```
+    -- new macro clr2!, this macro is similar to clr! unless clr2! will not add newline.
+
+# What's new (v0.2.1)
+    -- New traits ColorUl256 to colorized and add underline style to your text on terminal
     -- traits ColorUl for dynamic buffer with generic type still not available for current version but will be added in the future
 
 # Quick start

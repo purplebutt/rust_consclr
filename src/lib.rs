@@ -88,6 +88,7 @@
 //! }
 //! ```
 
+mod fcbfr;
 pub mod colors; pub mod helper; pub mod macros; pub mod prelude;
 
 use cbfr::prelude::BFRDYN;
@@ -451,3 +452,48 @@ pub trait ColorBg: ToString {
 impl ColorBg for &str {}
 impl ColorBg for &String {}
 impl ColorBg for String {}
+
+///
+/// A trait that contain methods to format self with background color
+/// once this trait imported, &str, &String and String will
+/// have extension method to format it with bg color on terminal
+/// # Example
+/// ```
+/// use consclr::ColorUl256;
+/// 
+/// let text = "Lorem Ipsum";
+/// println!("{}", text.ured());
+/// ```
+pub trait ColorUl: ToString {
+    fn ublack<const S: usize>(&self) -> BFRDYN {
+        stylify(self.to_string().as_str(), Underline::BLACK)
+    }
+    fn ured<const S: usize>(&self) -> BFRDYN {
+        stylify(self.to_string().as_str(), Underline::RED)
+    }
+    fn ugreen<const S: usize>(&self) -> BFRDYN {
+        stylify(self.to_string().as_str(), Underline::GREEN)
+    }
+    fn uyellow<const S: usize>(&self) -> BFRDYN {
+        stylify(self.to_string().as_str(), Underline::YELLOW)
+    }
+    fn ublue<const S: usize>(&self) -> BFRDYN {
+        stylify(self.to_string().as_str(), Underline::BLUE)
+    }
+    fn upurple<const S: usize>(&self) -> BFRDYN {
+        stylify(self.to_string().as_str(), Underline::PURPLE)
+    }
+    fn ugrblue<const S: usize>(&self) -> BFRDYN {
+        stylify(self.to_string().as_str(), Underline::GRBLUE)
+    }
+    fn ugray<const S: usize>(&self) -> BFRDYN {
+        stylify(self.to_string().as_str(), Underline::GRAY)
+    }
+    fn uwhite<const S: usize>(&self) -> BFRDYN {
+        stylify(self.to_string().as_str(), Underline::WHITE)
+    }
+}
+
+impl ColorUl for &str {}
+impl ColorUl for &String {}
+impl ColorUl for String {}
